@@ -3,116 +3,78 @@ let form = document.querySelector('#cargarAutomata');
 let file = document.querySelector('#file');
 let autom = {};
 
-// nuestro listener para los objetos que traemos con eol cargar archivo
+//Empezamos con las funciones que nos pide el proyecto
+//Para la opcion de subida, evita que se recargue la pagina 
 form.addEventListener('submit', handleSubmit);
 
+//Creacion del grafico para nuestro automata 
+let estado = document.createElement('div');
+estado.setAttribute('class','mermaid');
+estado.setAttribute('id','grafico1');
+estado.textContent='grafico TD;'
+//Aca
+document.body.append(estado)
+//Se crea el estado que sera el encargado de guardar la informaicon que necesitamos para la graficacion del automata
+//con la libreria de mermaid 
 
-//Ahora deberemos crear la funcion que nos lea el automata
-function LeerAutoma(event){
+//Funcion que nos permite leer el archivo del automaa que subimos
+function LeerAutomata(event){
 	autom = JSON.parse(event.target.result);
 	document.getElementById("text_Autom").innerHTML = JSON.stringify(autom);
 	if (autom) {
-		crearAutoma(autom)
+		//Creamos el automata
+		crearAutom(autom)
+		//Hallamos el reverso del automata
+		console.log("reverso")
+		reverso(autom)
 	}
 }
 
+function crearAutom(autom){
+	
+	console.log(autom, "Nuestro Automata")
 
+	let estado1 = document.getElementById("grafico1")
+	//estado.append("o --> p;")
+	console.log(estado1," ensayo graficacion automata")
+	document.body.append(estado1)
 
-
-
-
-
-function lecturaAutomata(event){
-	automata = JSON.parse(event.target.result);
-	document.getElementById("txt_inp").innerHTML = JSON.stringify(automata);
-	if (automata) {
-		creacionAutomata(automata)
-		reversoAutomata(automata)
-	}
 }
 
-//Graph creation
-let state = document.createElement('div');
-state.setAttribute('class','mermaid');
-state.setAttribute('id','graph1');
-state.textContent='graph TD;'
-
-//AObject
-var myCar = {
-    make: 'Ford',
-    model: 'Mustang',
-    year: 1969
-};
-
-function hola(){
-	state.append(myCar.make,';')
-	state.append(myCar.model)
-	for (let i = 0; i < 7; i++) {
-		
+function reverso(autom){
+	let reversoAutom = autom
+	let newInitial = reversoAutom.initial
+	reversoAutom.initial=reversoAutom.final
+	reversoAutom.final=newInitial
+	if(reversoAutom.final.length == 1){
+		 for (let i = 0; i < reversoAutom.transition.length; i++) {
+			 let transition = reversoAutom.transition[i]
+			 let nuevoFrom = transition.from
+			 transition.from = transition.to
+			 transition.to = nuevoFrom
+			 nuevoFrom = ""
+		 }
 	}
+	console.log(reversoAutom)
+	
+	
+	
+
 }
-hola()
 
-
-
-document.body.append(state)
-
-
-
-
-
-console.log(document.body.childNodes);
-$(document).ready(function(){
-	mermaid.initialize({ startOnLoad: true });
-});
 
 function handleSubmit(event){
 
-	// Stop the form from reloading the page
+	// colabora evitando que se nos recargue la pagina cada vez que cargemos un archivo 
 	event.preventDefault();
 
-	// If there's no file, do nothing
+	// Nos evalua el archivo; si no es valido lo ignora 
 	if (!file.value.length) return;
 
+	//si es un archivo valido entramos a nuestras funciones
 	let reader = new FileReader();
 
-	reader.onload = lecturaAutomata;
+	reader.onload = LeerAutomata;
+	//convertir el json a archivo de texto
 	reader.readAsText(file.files[0]);
-}
-
-
-
-
-function creacionAutomata(automata){
-	
-	console.log("hello world", automata)
-
-	let state1 = document.getElementById("graph1")
-	state.append("a --> b;")
-	
-	console.log(state1,"perris")
-	document.body.append(state1)
-
-}
-
-function reversoAutomata(automata){
-	let revAut = automata
-	let nuevoInicial = revAut.initial
-	revAut.initial=revAut.final
-	revAut.final=nuevoInicial
-	if(revAut.final.length == 1){
-		 for (let i = 0; i < revAut.transition.length; i++) {
-			 let transicion = revAut.transition[i]
-			 let nuevoFrom = transicion.from
-			 transicion.from = transicion.to
-			 transicion.to = nuevoFrom
-			 nuevoFrom = ""
-			 console.log(typeof(transicion), transicion, "DESPUES")
-			 
-		 }
-	}
-	
-	
-	
-
 }
