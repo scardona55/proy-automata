@@ -25,9 +25,18 @@ function LeerAutomata(event){
 		//Creamos el automata
 		crearAutom(autom)
 		//Hallamos el reverso del automata
-		console.log("reverso")
-		reverso(autom)
+		//console.log("reverso")
+		//reverso(autom)
+		complemento(autom)
+		//	
+		union(autom)
 	}
+}
+
+function botoncomplemento(){
+	console.log("botonsito");
+	let botonsito=document.getElementById("complemento");
+	botonsito.addEventListener("click",complemento(autom))
 }
 
 function crearAutom(autom){
@@ -63,6 +72,12 @@ function reverso(autom){
 }
 
 
+/* function reversar(automata){
+	let reversoAutomata= automata
+	reversoAutomata
+} */
+
+
 function handleSubmit(event){
 
 	// colabora evitando que se nos recargue la pagina cada vez que cargemos un archivo 
@@ -78,3 +93,63 @@ function handleSubmit(event){
 	//convertir el json a archivo de texto
 	reader.readAsText(file.files[0]);
 }
+
+function union(automata1, automata2){
+	const objetoautomata= {name:`${automata1.name}${automata2.name}`}
+	const states =[];
+	const finals =[];
+	for(let i=0; i<(automata1.states.length);i++){
+		for(let j=0; j<(automata1.states.length);i++){
+			let x =`${automata1.states[i]}${automata2.states[j]}`;
+			if(automata1.final.includes(automata1.states[i]) || automata2.final.includes(automata2.states[i])){
+				finals.push(x)
+			}
+			states.push(x)	
+		}
+	}
+	objetoautomata.states= states;
+	objetoautomata.lenguage= automata1.lenguage;
+	
+	const initial = `${automata1.states[0]}${automata2.states[0]}`;
+	objetoautomata.initial=initial;
+	objetoautomata.final=finals;
+
+	const transiciones=[];
+	for(const tran in automata1.lenguage){
+		const transicion={event:`[${tran}]`};
+		for(let i=0; i<(automata1.states.length);i++){
+			for(let j=0; j<(automata1.states.length);i++){
+					const from = `${automata1.transition.from[i]}${automata2.transition.from[j]}`
+					const to = `${automata1.transition.to[i]}${automata2.transition.to[j]}`
+					transicion.from=from;
+					transicion.to=to;
+					transiciones[j]= transicion;
+			}
+		}
+
+	}
+	objetoautomata.transition=transiciones;
+	const json= JSON.stringify(objetoautomata);
+
+	return json;
+
+
+}
+
+function complemento(automata){
+	let complementoAutomata = automata
+	let estados = complementoAutomata.states
+	let finales=complementoAutomata.final
+	let estadostemporales=complementoAutomata.final
+	let finalestemporales=[];
+	for(let i =0; i<(automata.states.length);i++){
+		if(!finales.includes(automata.states[i])){
+			finalestemporales.push(estados[i])
+		}else{
+			continue;
+		}
+	}
+	complementoAutomata.final=finalestemporales;
+	complementoAutomata.normalstates=estadostemporales;
+	console.log(complementoAutomata, "complemento")
+	}
