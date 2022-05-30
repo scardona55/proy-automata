@@ -1,0 +1,35 @@
+{
+    "name" : "automata",
+    "states":[
+        "a",
+        "b",
+        "c",
+        "d"
+    ],
+    "lenguage": [
+        0,
+        1,
+        2
+    ],
+    "initial": "a",
+    "final": "d",
+    "transition": [
+        {
+            "event": [
+                1
+            ],
+            "from": "a",
+            "to": "b"
+        },
+        {
+            "event": "[1,0]",
+            "from": "b",
+            "to": "c"
+        },
+        {
+            "event":"[1,0]",
+            "from": "c",
+            "to": "d"
+        }
+    ]
+}
