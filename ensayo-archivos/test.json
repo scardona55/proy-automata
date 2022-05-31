@@ -12,7 +12,7 @@
         2
     ],
     "initial": "a",
-    "final":["d","b"],
+    "final": "d",
     "transition": [
         {
             "event": [
