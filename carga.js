@@ -56,13 +56,13 @@ function reverso(autom){
 	reversoAutom.initial=reversoAutom.final
 	reversoAutom.final=newInitial
 	if(reversoAutom.final.length == 1){
-		 for (let i = 0; i < reversoAutom.transition.length; i++) {
-			 let transition = reversoAutom.transition[i]
-			 let nuevoFrom = transition.from
-			 transition.from = transition.to
-			 transition.to = nuevoFrom
-			 nuevoFrom = ""
-		 }
+		for (let i = 0; i < reversoAutom.transition.length; i++) {
+			let transition = reversoAutom.transition[i]
+			let nuevoFrom = transition.from
+			transition.from = transition.to
+			transition.to = nuevoFrom
+			nuevoFrom = ""
+		}
 	}
 	console.log(reversoAutom)
 	
