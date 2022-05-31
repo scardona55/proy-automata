@@ -42,7 +42,7 @@ function LeerAutomata(event){
 
 		//union(text_Autom.value,text_Autom2.value);
 		//	
-		union(autom,autom)
+	automatacompleto(autom)
 	}
 }
 function LeerAutomata2(event){
@@ -66,7 +66,7 @@ function crearUnir(event){
 	document.getElementById("text_Autom").innerHTML = JSON.stringify(autom);
 	if (autom) {
 		//Creamos el automata
-		crearAutom(autom)
+		//crearAutom(autom)
 			
 		union(autom,autom)
 	}
@@ -77,18 +77,17 @@ function crearReverso(event){
 	document.getElementById("text_Autom2").innerHTML = JSON.stringify(autom);
 	if (autom) {
 		//Creamos el automata
-		crearAutom(autom)
+		//crearAutom(autom)
 		reverso(autom)
-		complemento(autom)
 	}
 }
 
 function crearCompl(event){
 	autom = JSON.parse(event.target.result);
-	document.getElementById("text_Autom2").innerHTML = JSON.stringify(autom);
+	document.getElementById("text_Autom").innerHTML = JSON.stringify(autom);
 	if (autom) {
 		//Creamos el automata
-		crearAutom(autom)
+		//crearAutom(autom)
 		complemento(autom)
 	}
 }
@@ -100,24 +99,45 @@ function botoncomplemento(){
 
 
 
-function reverso(autom){
+function reverso(automata){
 	// evita que se nos recargue la pagina cada vez que cargemos un archivo 
 	event.preventDefault();
-	let reversoAutom = autom
-	let newInitial = reversoAutom.initial
-	reversoAutom.initial=reversoAutom.final
-	reversoAutom.final=newInitial
-	console.log(reversoAutom.final.length)
-	if(reversoAutom.final.length == 1){
-		for (let i = 0; i < reversoAutom.transition.length; i++) {
-			let transition = reversoAutom.transition[i]
+	let reversoAutomata= autom;
+    if(automata.final.length>1){
+        let lenguaje= automata.lenguage;
+        lenguaje.push("landa");
+        reversoAutomata.lenguage=lenguaje;
+        let nuevosestado=automata.states;
+        nuevosestado.push("estadonuevo");
+        reversoAutomata.states=nuevosestado;
+        reversoAutomata.initial="estadonuevo";
+        let transtemp=automata.transition;
+        for(let i=0; i<automata.final.length;i++){
+            let objecttemp={};
+            objecttemp.event= "landa";
+            objecttemp.from=automata.final[i];
+            objecttemp.to="estadonuevo";
+            transtemp.push(objecttemp)
+            console.log(automata.final[i]);
+        }
+        reversoAutomata.transition=transtemp;
+	}
+        reversoAutomata.final= autom.initial;
+
+    
+    console.log(reversoAutomata);
+	reversoAutomata.initial=reversoAutomata.final
+	console.log(reversoAutomata.final.length)
+	if(reversoAutomata.final.length == 1){
+		for (let i = 0; i < reversoAutomata.transition.length; i++) {
+			let transition = reversoAutomata.transition[i]
 			let nuevoFrom = transition.from
 			transition.from = transition.to
 			transition.to = nuevoFrom
 			nuevoFrom = ""
 		}
 	}
-	console.log(reversoAutom)
+	console.log(reversoAutomata)
 }
 
 
@@ -237,14 +257,15 @@ function union(automata1, automata2){
 		for(let i=0; i<(automata1.states.length);i++){
 			for(let j=0; j<(automata2.states.length);j++){
 				console.log(automata2.transition[i].from)
-					const fromauto = `${automata1.transition[i].from}.${automata2.transition[j].from}`
+					const fromauto = `${automata1.transition[i].from}${automata2.transition[j].from}`
 					const toauto = `${automata1.transition[i].to}${automata2.transition[j].to}`
 					transicion.from=fromauto;
 					transicion.to=toauto;
 					transiciones[j]= transicion;
 					console.log(transicion);
 					objetoautomata.transition=transiciones;
-					console.log(`automata unido...${objetoautomata}`)
+					console.log("union")
+					console.log(objetoautomata)
 			}
 		}
 
@@ -287,8 +308,9 @@ function automatacompleto(automata){
 	for(let i = 0; i<automata.states.length;i++){
 		let reviso = automata.transition.filter(property=>property.from == automata.states[i])
 		for(let j = 0; j<automata.lenguage.length;j++){
-			console.log(reviso[0])
-			if(!reviso[i].event.includes(automata.lenguage[j])){
+			console.log(reviso[i].event[i])
+			console.log(automata.lenguage[j])
+			if(!reviso[i].event[i] == (automata.lenguage[j])){
 				console.log(automata.states[j])
 				let objecttemp={};
 				objecttemp.event=automata.lenguage[i];
@@ -296,6 +318,7 @@ function automatacompleto(automata){
 				objecttemp.to="sumidero";
 				arraytemp.push(objecttemp)
 				console.log(arraytemp)
+				automata.push(arraytemp)
 			}
 		}
 	}
