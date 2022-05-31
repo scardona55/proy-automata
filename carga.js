@@ -11,7 +11,7 @@ form.addEventListener('submit', handleSubmit);
 let estado = document.createElement('div');
 estado.setAttribute('class','mermaid');
 estado.setAttribute('id','grafico1');
-let _codeSyntax= "graph TD;";
+//let _codeSyntax= "graph TD;";
 
 
 
@@ -26,12 +26,12 @@ function LeerAutomata(event){
 	document.getElementById("text_Autom").innerHTML = JSON.stringify(autom);
 	if (autom) {
 		//Creamos el automata
-		crearAutom(autom)
+		//crearAutom(autom)
 		
 		//Hallamos el reverso del automata
 		//console.log("reverso")
 		//reverso(autom)
-		complemento(autom)
+		automatacompleto(autom)
 		//	
 		//union(autom)
 	}
@@ -65,13 +65,6 @@ function reverso(autom){
 	
 
 }
-
-
-/* function reversar(automata){
-	let reversoAutomata= automata
-	reversoAutomata
-} */
-
 
 function handleSubmit(event){
 
@@ -131,9 +124,9 @@ function handleSubmit(event){
 //
 //}
 
-function reversar(automata){
+function reverso2(automata){
     let reversoAutomata= automata;
-    
+    if(automata.final.length>1){
         let lenguaje= automata.lenguage;
         lenguaje.push("landa");
         reversoAutomata.lenguage=lenguaje;
@@ -151,12 +144,31 @@ function reversar(automata){
             console.log(automata.final[i]);
         }
         reversoAutomata.transition=transtemp;
-        
+	}
         reversoAutomata.final= autom.initial;
 
     
     console.log(reversoAutomata);
 } 
+
+function automatacompleto(automata){
+	let arraytemp=[];
+	for(let i = 0; i<automata.states.length;i++){
+		let reviso = automata.transition.filter(property=>property.from == automata.states[i])
+		for(let j = 0; j<automata.lenguage.length;j++){
+			console.log(reviso[0])
+			if(!reviso[i].event.includes(automata.lenguage[j])){
+				console.log(automata.states[j])
+				let objecttemp={};
+				objecttemp.event=automata.lenguage[i];
+				objecttemp.from=reviso[i].from;
+				objecttemp.to="sumidero";
+				arraytemp.push(objecttemp)
+				console.log(arraytemp)
+			}
+		}
+	}
+}
 
 
 function complemento(automata){
@@ -188,8 +200,8 @@ function complemento(automata){
 		mermaid.render("preparedScheme", $code, insert);
 	}
 	
-	function crearAutom(autom){
+	/* function crearAutom(autom){
 		_codeSyntax = _codeSyntax
 		crearGrafico(_codeSyntax);
 	
-	}
+	} */
