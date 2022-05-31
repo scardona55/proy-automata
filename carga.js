@@ -3,18 +3,20 @@ let form = document.querySelector('#cargarAutomata');
 let file = document.querySelector('#file');
 let form2 = document.querySelector('#cargarAutomata2');
 let file2 = document.querySelector('#file2');
+let rever = document.querySelector('#reverso');
 let autom = {};
 
 //Empezamos con las funciones que nos pide el proyecto
 //Para la opcion de subida, evita que se recargue la pagina 
 form.addEventListener('submit', cargar1);
 form2.addEventListener('submit', cargar2);
+rever.addEventListener('submit', reverso);
 
 //Creacion del grafico para nuestro automata 
 let estado = document.createElement('div');
 estado.setAttribute('class','mermaid');
 estado.setAttribute('id','grafico1');
-let _codeSyntax= "graph TD;";
+//let _codeSyntax= "graph TD;";
 
 
 
@@ -35,6 +37,7 @@ function LeerAutomata(event){
 		//console.log("reverso")
 		//reverso(autom)
 		complemento(autom)
+		//reversar(autom)
 		//	
 		//union(autom)
 	}
@@ -50,6 +53,7 @@ function LeerAutomata2(event){
 		//console.log("reverso")
 		//reverso(autom)
 		complemento(autom)
+		//reversar(autom)
 		//	
 		//union(autom)
 	}
@@ -64,10 +68,13 @@ function botoncomplemento(){
 
 
 function reverso(autom){
+	// evita que se nos recargue la pagina cada vez que cargemos un archivo 
+	event.preventDefault();
 	let reversoAutom = autom
 	let newInitial = reversoAutom.initial
 	reversoAutom.initial=reversoAutom.final
 	reversoAutom.final=newInitial
+	console.log(reversoAutom.final.length)
 	if(reversoAutom.final.length == 1){
 		for (let i = 0; i < reversoAutom.transition.length; i++) {
 			let transition = reversoAutom.transition[i]
@@ -78,10 +85,6 @@ function reverso(autom){
 		}
 	}
 	console.log(reversoAutom)
-	
-	
-	
-
 }
 
 
@@ -166,6 +169,8 @@ function cargar2(event){
 //}
 
 function reversar(automata){
+	// evita que se nos recargue la pagina cada vez que cargemos un archivo 
+	event.preventDefault();
     let reversoAutomata= automata;
     
         let lenguaje= automata.lenguage;
