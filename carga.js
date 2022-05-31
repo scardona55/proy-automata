@@ -57,7 +57,7 @@ function LeerAutomata2(event){
 function botoncomplemento(){
 	console.log("botonsito");
 	let botonsito=document.getElementById("complemento");
-	botonsito.addEventListener("click",complemento(autom))
+	botonsito.addEventListener('click',complemento(autom))
 }
 
 
@@ -147,19 +147,24 @@ function union(automata1, automata2){
 
 	const transiciones=[];
 	for(let k= 0; k< automata1.lenguage.length;k++){
-		const transicion={event:`[${automata1.lenguage[k]}]`};
+		const transicion={};
+		transicion.event=`[${automata1.lenguage[k]}]`
 		for(let i=0; i<(automata1.states.length);i++){
-			for(let j=0; j<(automata1.states.length);j++){
-					const from = `${automata1.transition.from[i]}${automata2.transition.from[j]}`
-					const to = `${automata1.transition.to[i]}${automata2.transition.to[j]}`
-					transicion.from=from;
-					transicion.to=to;
+			for(let j=0; j<(automata2.states.length);j++){
+				console.log(automata2.transition[i].from)
+					const fromauto = `${automata1.transition[i].from}.${automata2.transition[j].from}`
+					const toauto = `${automata1.transition[i].to}${automata2.transition[j].to}`
+					transicion.from=fromauto;
+					transicion.to=toauto;
 					transiciones[j]= transicion;
+					console.log(transicion);
+					objetoautomata.transition=transiciones;
+					console.log(`automata unido...${objetoautomata}`)
 			}
 		}
 
 	}
-	objetoautomata.transition=transiciones;
+	
 	console.log(objetoautomata);
 
 
