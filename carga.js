@@ -1,11 +1,14 @@
 //Importamos los elementos que vamos a necesotar para la carga de archivos
 let form = document.querySelector('#cargarAutomata');
 let file = document.querySelector('#file');
+let form2 = document.querySelector('#cargarAutomata2');
+let file2 = document.querySelector('#file2');
 let autom = {};
 
 //Empezamos con las funciones que nos pide el proyecto
 //Para la opcion de subida, evita que se recargue la pagina 
-form.addEventListener('submit', handleSubmit);
+form.addEventListener('submit', cargar1);
+form2.addEventListener('submit', cargar2);
 
 //Creacion del grafico para nuestro automata 
 let estado = document.createElement('div');
@@ -20,10 +23,25 @@ document.body.append(estado)
 //Se crea el estado que sera el encargado de guardar la informaicon que necesitamos para la graficacion del automata
 //con la libreria de mermaid 
 
-//Funcion que nos permite leer el archivo del automaa que subimos
+//Funcion que nos permite leer el archivo del automata que subimos
 function LeerAutomata(event){
 	autom = JSON.parse(event.target.result);
 	document.getElementById("text_Autom").innerHTML = JSON.stringify(autom);
+	if (autom) {
+		//Creamos el automata
+		crearAutom(autom)
+		
+		//Hallamos el reverso del automata
+		//console.log("reverso")
+		//reverso(autom)
+		complemento(autom)
+		//	
+		//union(autom)
+	}
+}
+function LeerAutomata2(event){
+	autom = JSON.parse(event.target.result);
+	document.getElementById("text_Autom2").innerHTML = JSON.stringify(autom);
 	if (autom) {
 		//Creamos el automata
 		crearAutom(autom)
@@ -73,9 +91,9 @@ function reverso(autom){
 } */
 
 
-function handleSubmit(event){
+function cargar1(event){
 
-	// colabora evitando que se nos recargue la pagina cada vez que cargemos un archivo 
+	// evita que se nos recargue la pagina cada vez que cargemos un archivo 
 	event.preventDefault();
 
 	// Nos evalua el archivo; si no es valido lo ignora 
@@ -87,6 +105,22 @@ function handleSubmit(event){
 	reader.onload = LeerAutomata;
 	//convertir el json a archivo de texto
 	reader.readAsText(file.files[0]);
+}
+
+function cargar2(event){
+
+	// evita que se nos recargue la pagina cada vez que cargemos un archivo 
+	event.preventDefault();
+
+	// Nos evalua el archivo; si no es valido lo ignora 
+	if (!file2.value.length) return;
+
+	//si es un archivo valido entramos a nuestras funciones
+	let reader = new FileReader();
+
+	reader.onload = LeerAutomata2;
+	//convertir el json a archivo de texto
+	reader.readAsText(file2.files[0]);
 }
 
 //function union(automata1, automata2){
