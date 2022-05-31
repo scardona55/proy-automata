@@ -34,9 +34,9 @@ function LeerAutomata(event){
 		//Hallamos el reverso del automata
 		//console.log("reverso")
 		//reverso(autom)
-		automatacompleto(autom)
+		//union(text_Autom.value,text_Autom2.value);
 		//	
-		//union(autom)
+		union(autom,autom)
 	}
 }
 function LeerAutomata2(event){
@@ -49,7 +49,6 @@ function LeerAutomata2(event){
 		//Hallamos el reverso del automata
 		//console.log("reverso")
 		//reverso(autom)
-		complemento(autom)
 		//	
 		//union(autom)
 	}
@@ -123,47 +122,48 @@ function cargar2(event){
 	reader.readAsText(file2.files[0]);
 }
 
-//function union(automata1, automata2){
-//	const objetoautomata= {name:`${automata1.name}${automata2.name}`}
-//	const states =[];
-//	const finals =[];
-//	for(let i=0; i<(automata1.states.length);i++){
-//		for(let j=0; j<(automata1.states.length);i++){
-//			let x =`${automata1.states[i]}${automata2.states[j]}`;
-//			if(automata1.final.includes(automata1.states[i]) || automata2.final.includes(automata2.states[i])){
-//				finals.push(x)
-//			}
-//			states.push(x)	
-//		}
-//	}
-//	objetoautomata.states= states;
-//	objetoautomata.lenguage= automata1.lenguage;
-//	
-//	const initial = `${automata1.states[0]}${automata2.states[0]}`;
-//	objetoautomata.initial=initial;
-//	objetoautomata.final=finals;
-//
-//	const transiciones=[];
-//	for(const tran in automata1.lenguage){
-//		const transicion={event:`[${tran}]`};
-//		for(let i=0; i<(automata1.states.length);i++){
-//			for(let j=0; j<(automata1.states.length);i++){
-//					const from = `${automata1.transition.from[i]}${automata2.transition.from[j]}`
-//					const to = `${automata1.transition.to[i]}${automata2.transition.to[j]}`
-//					transicion.from=from;
-//					transicion.to=to;
-//					transiciones[j]= transicion;
-//			}
-//		}
-//
-//	}
-//	objetoautomata.transition=transiciones;
-//	const json= JSON.stringify(objetoautomata);
-//
-//	return json;
-//
-//
-//}
+function union(automata1, automata2){
+	const objetoautomata= {name:`${automata1.name}${automata2.name}`}
+	const states =[];
+	const finals =[];
+	console.log((automata2.states.length));
+	console.log(automata2);
+	for(let i=0; i<(automata1.states.length);i++){
+		for(let j=0; j<(automata2.states.length);j++){
+			let x =`${automata1.states[i]}${automata2.states[j]}`;
+			if(automata1.final.includes(automata1.states[i]) || automata2.final.includes(automata2.states[i])){
+				finals.push(x)
+			}
+			states.push(x)
+		}
+	}
+	objetoautomata.states= states;
+	objetoautomata.lenguage= automata1.lenguage;
+	console.log(objetoautomata)
+	
+	const initial = `${automata1.states[0]}${automata2.states[0]}`;
+	objetoautomata.initial=initial;
+	objetoautomata.final=finals;
+
+	const transiciones=[];
+	for(let k= 0; k< automata1.lenguage.length;k++){
+		const transicion={event:`[${automata1.lenguage[k]}]`};
+		for(let i=0; i<(automata1.states.length);i++){
+			for(let j=0; j<(automata1.states.length);j++){
+					const from = `${automata1.transition.from[i]}${automata2.transition.from[j]}`
+					const to = `${automata1.transition.to[i]}${automata2.transition.to[j]}`
+					transicion.from=from;
+					transicion.to=to;
+					transiciones[j]= transicion;
+			}
+		}
+
+	}
+	objetoautomata.transition=transiciones;
+	console.log(objetoautomata);
+
+
+}
 
 function reverso2(automata){
     let reversoAutomata= automata;
