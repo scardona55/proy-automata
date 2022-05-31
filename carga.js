@@ -3,14 +3,14 @@ let form = document.querySelector('#cargarAutomata');
 let file = document.querySelector('#file');
 let form2 = document.querySelector('#cargarAutomata2');
 let file2 = document.querySelector('#file2');
-let rever = document.querySelector('#reverso');
+let carga = document.querySelector('#cargarUnion');
 let autom = {};
 
 //Empezamos con las funciones que nos pide el proyecto
 //Para la opcion de subida, evita que se recargue la pagina 
 form.addEventListener('submit', cargar1);
 form2.addEventListener('submit', cargar2);
-rever.addEventListener('submit', reverso);
+carga.addEventListener('submit', cargar1,union);
 
 //Creacion del grafico para nuestro automata 
 let estado = document.createElement('div');
