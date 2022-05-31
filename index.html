@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <title > Carga de archivos 
+    <title > Automatas
     </title>
     <script type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -22,7 +22,16 @@
     </form>
 
     <textarea id="text_Autom" cols="100" rows="10" style="resize: both;"></textarea>   
+
+    <form id="cargarAutomata2">
+        <label for="file">Seleccione el archivo que desea utilizar</label>
+        <input type="file" id="file2" accept=".json">
+        <button>Cargar segundo automata</button>
+    </form>
+
+    <textarea id="text_Autom2" cols="100" rows="10" style="resize: both;"></textarea>  
 <br>
+
 <script src="carga.js"></script>
 </body>
 
