@@ -4,14 +4,17 @@ let file = document.querySelector('#file');
 let form2 = document.querySelector('#cargarAutomata2');
 let file2 = document.querySelector('#file2');
 let carga = document.querySelector('#cargarUnion');
+let cargaRever = document.querySelector('#cargarReverso');
+let cargaCompl = document.querySelector('#cargarComplemento');
 let autom = {};
 
 //Empezamos con las funciones que nos pide el proyecto
 //Para la opcion de subida, evita que se recargue la pagina 
 form.addEventListener('submit', cargar1);
 form2.addEventListener('submit', cargar2);
-carga.addEventListener('submit', cargar1,union);
-
+carga.addEventListener('submit', cargar3);
+cargaRever.addEventListener('submit', cargar4);
+cargaCompl.addEventListener('submit', cargar5);
 //Creacion del grafico para nuestro automata 
 let estado = document.createElement('div');
 estado.setAttribute('class','mermaid');
@@ -58,7 +61,37 @@ function LeerAutomata2(event){
 		//union(autom)
 	}
 }
+function crearUnir(event){
+	autom = JSON.parse(event.target.result);
+	document.getElementById("text_Autom").innerHTML = JSON.stringify(autom);
+	if (autom) {
+		//Creamos el automata
+		crearAutom(autom)
+			
+		union(autom,autom)
+	}
+}
 
+function crearReverso(event){
+	autom = JSON.parse(event.target.result);
+	document.getElementById("text_Autom2").innerHTML = JSON.stringify(autom);
+	if (autom) {
+		//Creamos el automata
+		crearAutom(autom)
+		reverso(autom)
+		complemento(autom)
+	}
+}
+
+function crearCompl(event){
+	autom = JSON.parse(event.target.result);
+	document.getElementById("text_Autom2").innerHTML = JSON.stringify(autom);
+	if (autom) {
+		//Creamos el automata
+		crearAutom(autom)
+		complemento(autom)
+	}
+}
 function botoncomplemento(){
 	console.log("botonsito");
 	let botonsito=document.getElementById("complemento");
@@ -126,6 +159,53 @@ function cargar2(event){
 	reader.readAsText(file2.files[0]);
 }
 
+function cargar3(event){
+
+	// evita que se nos recargue la pagina cada vez que cargemos un archivo 
+	event.preventDefault();
+
+	// Nos evalua el archivo; si no es valido lo ignora 
+	if (!file.value.length) return;
+
+	//si es un archivo valido entramos a nuestras funciones
+	let reader = new FileReader();
+
+	reader.onload = crearUnir;
+	//convertir el json a archivo de texto
+	reader.readAsText(file.files[0]);
+}
+
+function cargar4(event){
+
+	// evita que se nos recargue la pagina cada vez que cargemos un archivo 
+	event.preventDefault();
+
+	// Nos evalua el archivo; si no es valido lo ignora 
+	if (!file.value.length) return;
+
+	//si es un archivo valido entramos a nuestras funciones
+	let reader = new FileReader();
+
+	reader.onload = crearReverso;
+	//convertir el json a archivo de texto
+	reader.readAsText(file.files[0]);
+}
+
+function cargar5(event){
+
+	// evita que se nos recargue la pagina cada vez que cargemos un archivo 
+	event.preventDefault();
+
+	// Nos evalua el archivo; si no es valido lo ignora 
+	if (!file.value.length) return;
+
+	//si es un archivo valido entramos a nuestras funciones
+	let reader = new FileReader();
+
+	reader.onload = crearCompl;
+	//convertir el json a archivo de texto
+	reader.readAsText(file.files[0]);
+}
 
 function union(automata1, automata2){
 	const objetoautomata= {name:`${automata1.name}${automata2.name}`}
