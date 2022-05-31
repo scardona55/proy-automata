@@ -1,38 +1,45 @@
-<!---Sergio Cardona
-    Carga de archivos para el automata------>
 <!DOCTYPE html>
-<html>
+    <html>
+    
+    <head>
+        <title > Automatas
+        </title>
+        <script type="text/javascript"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!---Librerias------>
+    </head>
+    
+    <body id="cuerpo" style="background-color: #EBE9E9;">
+        <header style="text-align: center; background-color: black; color: white; width: auto; height:auto;" >
+            <h1 id="titulo">Proyecto Autómatas</h1>
+        </header>
+        
+    
+        <form id="cargarAutomata">
+            <label for="file">Seleccione el archivo que desea utilizar</label>
+            <input type="file" id="file" accept=".json">
+            <button>Cargar automata</button>
+        </form>
+    
+        <textarea id="text_Autom" cols="100" rows="10" style="resize: both;"></textarea>   
+    
+        <form id="cargarAutomata2">
+            <label for="file">Seleccione el archivo que desea utilizar</label>
+            <input type="file" id="file2" accept=".json">
+            <button>Cargar segundo automata</button>
+        </form>
+    
+        <textarea id="text_Autom2" cols="100" rows="10" style="resize: both;"></textarea>  
+    <br>
+    
+    <script src="carga.js"></script>
 
-<head>
-    <title > Automatas
-    </title>
-    <script type="text/javascript"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!---Librerias------>
-</head>
-
-<body>
-    <h1>Proyecto Autómatas</h1>
-
-    <form id="cargarAutomata">
-        <label for="file">Seleccione el archivo que desea utilizar</label>
-        <input type="file" id="file" accept=".json">
-        <button>Cargar automata</button>
-    </form>
-
-    <textarea id="text_Autom" cols="100" rows="10" style="resize: both;"></textarea>   
-
-    <form id="cargarAutomata2">
-        <label for="file">Seleccione el archivo que desea utilizar</label>
-        <input type="file" id="file2" accept=".json">
-        <button>Cargar segundo automata</button>
-    </form>
-
-    <textarea id="text_Autom2" cols="100" rows="10" style="resize: both;"></textarea>  
-<br>
-
-<script src="carga.js"></script>
-</body>
-
-<html>
+    <footer style="text-align: center; background-color: black; color: white; width: auto; height:auto;">
+        <h3>Sergio Andres Cardona Tangaride</h3>
+        <h3>Crsitian Camilo Gil Grisales</h3>
+        <h3>Juan Andres Giraldo Arias</h3>
+    </footer>
+    </body>
+    
+    <html>
